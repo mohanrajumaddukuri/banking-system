@@ -8,6 +8,6 @@ import com.banking.banking_system.entity.Customer;
 public class CustomerService {
 
 	public Customer getCustomers() {
-		return new Customer(101, "Mohan", "Maddukuri", "mohan@gmail.com");
+		return new Customer(101L, "Mohan", "Maddukuri", "mohan@gmail.com");
 	}
 }
