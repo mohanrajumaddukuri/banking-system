@@ -15,8 +15,8 @@ public class Customer {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Long id;
 	
-	@Column(name="firts_name",nullable=false,length=100)
-	public String fisrtName;
+	@Column(name="first_name",nullable=false,length=100)
+	public String firstName;
 	
 	@Column(name="last_name",nullable=false,length=100)
 	public String lastName;
@@ -28,10 +28,10 @@ public class Customer {
 		
 	}
 
-	public Customer(Long id, String fisrtName, String lastName, String email) {
+	public Customer(Long id, String firstName, String lastName, String email) {
 		super();
 		this.id = id;
-		this.fisrtName = fisrtName;
+		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 	}
@@ -44,12 +44,12 @@ public class Customer {
 		this.id = id;
 	}
 
-	public String getFisrtName() {
-		return fisrtName;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setFisrtName(String fisrtName) {
-		this.fisrtName = fisrtName;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
 	public String getLastName() {
