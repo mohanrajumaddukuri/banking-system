@@ -28,4 +28,16 @@ public class CustomerService {
 	public Customer saveCustomer(Customer customer) {
 		return customerRepository.save(customer);
 	}
+	
+	public Customer updateCustomer(Long id, Customer updatedCustomer) {
+		
+		Customer existingCustomer=customerRepository.findById(id).orElseThrow(()-> 
+		new RuntimeException("Customer Not Found"));
+		
+		existingCustomer.setFirstName(updatedCustomer.getFirstName());
+		existingCustomer.setLastName(updatedCustomer.getLastName());
+		existingCustomer.setEmail(updatedCustomer.getEmail());
+		
+		return customerRepository.save(existingCustomer);
+	}
 }
