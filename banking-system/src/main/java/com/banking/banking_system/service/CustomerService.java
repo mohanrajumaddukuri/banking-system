@@ -42,4 +42,12 @@ public class CustomerService {
 		
 		return customerRepository.save(existingCustomer);
 	}
+	
+	public void deleteCustomer(Long id) {
+		
+		if(!customerRepository.existsById(id)) {
+			throw new CustomerNotFoundException("Customer Not Found "+id);
+		}
+		customerRepository.deleteById(id);
+	}
 }
