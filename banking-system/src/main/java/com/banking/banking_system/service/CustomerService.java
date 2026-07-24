@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.banking.banking_system.entity.Customer;
+import com.banking.banking_system.exception.CustomerNotFoundException;
 import com.banking.banking_system.repository.CustomerRepository;
 
 @Service
@@ -22,7 +23,8 @@ public class CustomerService {
 	}
 
 	public Customer getCustomerById( Long id) {
-		return customerRepository.findById(id).orElse(null);
+		return customerRepository.findById(id).orElseThrow(()-> 
+		new CustomerNotFoundException("Customer Not Found "+id));
 	}
 	
 	public Customer saveCustomer(Customer customer) {
@@ -32,7 +34,7 @@ public class CustomerService {
 	public Customer updateCustomer(Long id, Customer updatedCustomer) {
 		
 		Customer existingCustomer=customerRepository.findById(id).orElseThrow(()-> 
-		new RuntimeException("Customer Not Found"));
+		new CustomerNotFoundException("Customer Not Found "+id));
 		
 		existingCustomer.setFirstName(updatedCustomer.getFirstName());
 		existingCustomer.setLastName(updatedCustomer.getLastName());
