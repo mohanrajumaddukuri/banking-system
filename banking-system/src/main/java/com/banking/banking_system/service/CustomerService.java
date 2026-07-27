@@ -20,18 +20,34 @@ public class CustomerService {
 	}
 	
 
-	public List<Customer> getCustomers() {
-		return customerRepository.findAll();
+	public List<CustomerResponse> getCustomers() {
+		
+		List<Customer> customers =customerRepository.findAll();
+		
+		return customers.stream().map(customer->{
+			CustomerResponse response=new CustomerResponse();
+			response.setId(customer.getId());
+            response.setFirstName(customer.getFirstName());
+            response.setLastName(customer.getLastName());
+            response.setEmail(customer.getEmail());
+
+            return response;
+		}).toList();
 	}
 
-	public Customer getCustomerById( Long id) {
-		return customerRepository.findById(id).orElseThrow(()-> 
+	public CustomerResponse getCustomerById( Long id) {
+		Customer customer= customerRepository.findById(id).orElseThrow(()-> 
 		new CustomerNotFoundException("Customer Not Found "+id));
+		
+		CustomerResponse response=new CustomerResponse();
+
+		response.setId(customer.getId());
+		response.setFirstName(customer.getFirstName());
+		response.setLastName(customer.getLastName());
+		response.setEmail(customer.getEmail());
+
+		return response;
 	}
-	
-//	public Customer saveCustomer(Customer customer) {
-//		return customerRepository.save(customer);
-//	}
 	
 	public CustomerResponse createCustomer(CustomerRequest request) {
 		

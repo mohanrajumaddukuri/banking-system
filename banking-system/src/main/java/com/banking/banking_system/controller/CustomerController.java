@@ -30,20 +30,14 @@ public class CustomerController {
 	}
 	
 	@GetMapping
-	public List<Customer> getCustomers() {
+	public List<CustomerResponse> getCustomers() {
 		return customerService.getCustomers();
 	}
 	
 	@GetMapping("/{id}")
-	public Customer getCustomerById(@PathVariable Long id) {
+	public CustomerResponse getCustomerById(@PathVariable Long id) {
 		return customerService.getCustomerById(id);
 	}
-	
-//	@PostMapping
-//	@ResponseStatus(HttpStatus.CREATED)
-//	public Customer createCustomer(@RequestBody Customer customer) {
-//		return customerService.saveCustomer(customer);
-//	}
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
