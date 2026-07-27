@@ -8,15 +8,18 @@ import com.banking.banking_system.dto.CustomerRequest;
 import com.banking.banking_system.dto.CustomerResponse;
 import com.banking.banking_system.entity.Customer;
 import com.banking.banking_system.exception.CustomerNotFoundException;
+import com.banking.banking_system.mapper.CustomerMapper;
 import com.banking.banking_system.repository.CustomerRepository;
 
 @Service
 public class CustomerService {
 	
 	private final CustomerRepository customerRepository;
+	private final CustomerMapper customerMapper;
 	
-	public CustomerService(CustomerRepository customerRepository) {
+	public CustomerService(CustomerRepository customerRepository,CustomerMapper customerMapper) {
 		this .customerRepository=customerRepository;
+		this.customerMapper=customerMapper;
 	}
 	
 
@@ -24,47 +27,24 @@ public class CustomerService {
 		
 		List<Customer> customers =customerRepository.findAll();
 		
-		return customers.stream().map(customer->{
-			CustomerResponse response=new CustomerResponse();
-			response.setId(customer.getId());
-            response.setFirstName(customer.getFirstName());
-            response.setLastName(customer.getLastName());
-            response.setEmail(customer.getEmail());
-
-            return response;
-		}).toList();
+		return customers.stream().map(customerMapper::toResponse).toList();
 	}
 
 	public CustomerResponse getCustomerById( Long id) {
 		Customer customer= customerRepository.findById(id).orElseThrow(()-> 
 		new CustomerNotFoundException("Customer Not Found "+id));
-		
-		CustomerResponse response=new CustomerResponse();
 
-		response.setId(customer.getId());
-		response.setFirstName(customer.getFirstName());
-		response.setLastName(customer.getLastName());
-		response.setEmail(customer.getEmail());
-
-		return response;
+		return customerMapper.toResponse(customer);
 	}
 	
 	public CustomerResponse createCustomer(CustomerRequest request) {
 		
-		Customer customer=new Customer();
-		customer.setFirstName(request.getFirstName());
-		customer.setLastName(request.getLastName());
-		customer.setEmail(request.getEmail());
+		Customer customer=customerMapper.toEntity(request);
 		
 		Customer savedCustomer=customerRepository.save(customer);
 		
-		CustomerResponse response=new CustomerResponse();
-		response.setId(savedCustomer.getId());
-		response.setFirstName(savedCustomer.getFirstName());
-		response.setLastName(savedCustomer.getLastName());
-		response.setEmail(savedCustomer.getEmail());
+		return customerMapper.toResponse(savedCustomer);
 		
-		return response;
 	}
 	
 	public Customer updateCustomer(Long id, Customer updatedCustomer) {
