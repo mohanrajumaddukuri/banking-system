@@ -18,6 +18,8 @@ import com.banking.banking_system.dto.CustomerResponse;
 import com.banking.banking_system.entity.Customer;
 import com.banking.banking_system.service.CustomerService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/customers")
 public class CustomerController {
@@ -41,7 +43,7 @@ public class CustomerController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public CustomerResponse createCustomer(@RequestBody CustomerRequest request) {
+	public CustomerResponse createCustomer(@Valid@RequestBody CustomerRequest request) {
 		return customerService.createCustomer(request);
 	}
 	
