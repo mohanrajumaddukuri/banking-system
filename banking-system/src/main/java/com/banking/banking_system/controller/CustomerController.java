@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.banking.banking_system.dto.CustomerRequest;
+import com.banking.banking_system.dto.CustomerResponse;
 import com.banking.banking_system.entity.Customer;
 import com.banking.banking_system.service.CustomerService;
 
@@ -37,10 +39,16 @@ public class CustomerController {
 		return customerService.getCustomerById(id);
 	}
 	
+//	@PostMapping
+//	@ResponseStatus(HttpStatus.CREATED)
+//	public Customer createCustomer(@RequestBody Customer customer) {
+//		return customerService.saveCustomer(customer);
+//	}
+	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Customer createCustomer(@RequestBody Customer customer) {
-		return customerService.saveCustomer(customer);
+	public CustomerResponse createCustomer(@RequestBody CustomerRequest request) {
+		return customerService.createCustomer(request);
 	}
 	
 	@PutMapping("/{id}")

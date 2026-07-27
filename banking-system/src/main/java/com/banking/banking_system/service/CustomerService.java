@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.banking.banking_system.dto.CustomerRequest;
+import com.banking.banking_system.dto.CustomerResponse;
 import com.banking.banking_system.entity.Customer;
 import com.banking.banking_system.exception.CustomerNotFoundException;
 import com.banking.banking_system.repository.CustomerRepository;
@@ -27,8 +29,26 @@ public class CustomerService {
 		new CustomerNotFoundException("Customer Not Found "+id));
 	}
 	
-	public Customer saveCustomer(Customer customer) {
-		return customerRepository.save(customer);
+//	public Customer saveCustomer(Customer customer) {
+//		return customerRepository.save(customer);
+//	}
+	
+	public CustomerResponse createCustomer(CustomerRequest request) {
+		
+		Customer customer=new Customer();
+		customer.setFirstName(request.getFirstName());
+		customer.setLastName(request.getLastName());
+		customer.setEmail(request.getEmail());
+		
+		Customer savedCustomer=customerRepository.save(customer);
+		
+		CustomerResponse response=new CustomerResponse();
+		response.setId(savedCustomer.getId());
+		response.setFirstName(savedCustomer.getFirstName());
+		response.setLastName(savedCustomer.getLastName());
+		response.setEmail(savedCustomer.getEmail());
+		
+		return response;
 	}
 	
 	public Customer updateCustomer(Long id, Customer updatedCustomer) {
